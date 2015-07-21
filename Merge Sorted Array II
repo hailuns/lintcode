@@ -1,0 +1,50 @@
+
+Easy Merge Sorted Array II
+34%
+Accepted
+
+Merge two given sorted integer array A and B into a new sorted integer array.
+Have you met this question in a real interview? 
+
+
+ Example
+
+A=[1,2,3,4]
+
+B=[2,4,5,6]
+
+return [1,2,2,3,4,4,5,6]
+Challenge
+
+How can you optimize your algorithm if one array is very large and the other is very small?
+//
+class Solution {
+    /**
+     * @param A and B: sorted integer array A and B.
+     * @return: A new sorted integer array
+     */
+    public ArrayList<Integer> mergeSortedArray(ArrayList<Integer> A, ArrayList<Integer> B) {
+        // write your code here
+        int i = 0;
+        int j = 0;
+        if(A == null || A.size() == 0) return B;
+        if(B == null || B.size() == 0) return A;
+        ArrayList<Integer> res = new ArrayList<Integer>();
+        while(i < A.size() && j < B.size()){
+            if(A.get(i) < B.get(j)){
+                res.add(A.get(i));
+                i++;
+            }else{
+                res.add(B.get(j));
+                j++;
+            }
+        }
+        while(i < A.size()){
+            res.add(A.get(i++));
+        }
+        while(j < B.size()){
+            res.add(B.get(j++));
+        }
+        return res;
+    }
+}
