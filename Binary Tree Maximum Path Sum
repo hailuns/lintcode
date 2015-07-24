@@ -1,0 +1,48 @@
+
+Medium Binary Tree Maximum Path Sum
+23%
+Accepted
+
+Given a binary tree, find the maximum path sum.
+
+The path may start and end at any node in the tree.
+
+
+/**
+ * Definition of TreeNode:
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left, right;
+ *     public TreeNode(int val) {
+ *         this.val = val;
+ *         this.left = this.right = null;
+ *     }
+ * }
+ */
+public class Solution {
+    /**
+     * @param root: The root of binary tree.
+     * @return: An integer.
+     */
+    public int maxPathSum(TreeNode root) {
+        // write your code here
+        if(root == null) return 0;
+        int[] res = new int[1];
+        res[0] = Integer.MIN_VALUE;
+        maxPathSumHelper(root, res);
+        return res[0];
+        
+    }
+    private int maxPathSumHelper(TreeNode root, int[] res){
+        if(root == null){
+            return 0;
+        }else{ 
+            int singleLeft = maxPathSumHelper(root.left, res);
+            int singleRight = maxPathSumHelper(root.right, res);
+            int cross = singleLeft + root.val + singleRight;
+            int singleMax = Math.max(root.val, Math.max(singleLeft, singleRight) + root.val);
+            res[0] = Math.max(res[0], Math.max(cross, singleMax));
+            return singleMax;
+        }
+    }
+}
