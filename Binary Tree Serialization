@@ -1,0 +1,115 @@
+Medium Binary Tree Serialization
+16%
+Accepted
+
+Design an algorithm and write code to serialize and deserialize a binary tree. Writing the tree to a file is called 'serialization' and reading back from the file to reconstruct the exact same binary tree is 'deserialization'.
+
+There is no limit of how you deserialize or serialize a binary tree, you only need to make sure you can serialize a binary tree to a string and deserialize this string to the original structure.
+
+
+/**
+ * Definition of TreeNode:
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left, right;
+ *     public TreeNode(int val) {
+ *         this.val = val;
+ *         this.left = this.right = null;
+ *     }
+ * }
+ */
+class Solution {
+    /**
+     * This method will be invoked first, you should design your own algorithm 
+     * to serialize a binary tree which denote by a root node to a string which
+     * can be easily deserialized by your own "deserialize" method later.
+     */
+    public String serialize(TreeNode root) {
+        // write your code here
+        StringBuilder res = new StringBuilder();
+        if(root == null) return res.toString();
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+        queue.offer(root);
+        res.append(root.val);
+        while(!queue.isEmpty()){
+            TreeNode cur = queue.poll();
+            if(cur.left != null){
+                queue.offer(cur.left);
+            }
+            if(cur.right != null){
+                queue.offer(cur.right);
+            }
+            res.append(",");
+            if(cur.left != null){
+                res.append(cur.left.val);
+            }else{
+                res.append("#");
+            }
+            res.append(",");
+            if(cur.right != null){
+                res.append(cur.right.val);
+            }else{
+                res.append("#");
+            }
+                
+            
+        }
+        int i = res.length()-1;
+         while(i >= 0 && res.charAt(i) == '#'){
+           res.deleteCharAt(i);
+           res.deleteCharAt(i-1);
+           i -= 2;
+        }
+        return res.toString();
+    }
+    
+    /**
+     * This method will be invoked second, the argument data is what exactly
+     * you serialized at method "serialize", that means the data is not given by
+     * system, it's given by your own serialize method. So the format of data is
+     * designed by yourself, and deserialize it here as you serialize it in 
+     * "serialize" method.
+     */
+    public TreeNode deserialize(String data) {
+        // write your code here
+        if(data == null || data.length()==0) return null;
+        String[] list = data.split(",");
+        int count = 0;
+        int len = list.length;
+        Queue<TreeNode> queue = new LinkedList<TreeNode>();
+        TreeNode root = new TreeNode(Integer.parseInt(list[0]));
+        queue.offer(root);
+        count++;
+        while(!queue.isEmpty()){
+            TreeNode cur = queue.poll();
+            String left = "";
+            String right = "";
+            if(count < len){
+                left = list[count];
+                count++;
+                if(!left.equals("#")){
+                    cur.left = new TreeNode(Integer.parseInt(left));
+                    queue.offer(cur.left);
+                }else{
+                    cur.left = null;
+                }
+            }else{
+                cur.left = null;
+            }
+            if(count < len){
+                right = list[count];
+                count++;
+                if(!right.equals("#")){
+                    cur.right = new TreeNode(Integer.parseInt(right));
+                    queue.offer(cur.right);
+                }else{
+                    cur.right = null;
+                }
+            }else{
+                cur.right = null;
+            }
+        }
+        return root;
+    }
+}
+
