@@ -1,0 +1,26 @@
+Easy Triangle
+
+26% Accepted
+Given a triangle, find the minimum path sum from top to bottom. Each step you may move to adjacent numbers on the row below.
+
+public class Solution {
+    /**
+     * @param triangle: a list of lists of integers.
+     * @return: An integer, minimum path sum.
+     */
+    public int minimumTotal(ArrayList<ArrayList<Integer>> triangle) {
+        // write your code here
+        int m = triangle.size();
+        int n = triangle.get(triangle.size()-1).size();
+        int[][] sum = new int[m][n];
+        for(int j = 0; j < n; j++){
+            sum[m-1][j] = triangle.get(m-1).get(j);
+        }
+        for(int i = m-2; i >=0; i--){
+            for(int j = 0; j < triangle.get(i).size(); j++){
+                sum[i][j] = Math.min(sum[i+1][j], sum[i+1][j+1]) + triangle.get(i).get(j);
+            }
+        }
+        return sum[0][0];
+    }
+}
