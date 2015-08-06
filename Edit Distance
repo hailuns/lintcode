@@ -1,0 +1,30 @@
+public class Solution {
+    /**
+     * @param word1 & word2: Two string.
+     * @return: The minimum number of steps.
+     */
+    public int minDistance(String word1, String word2) {
+        // write your code hereq
+        int len1 = word1.length();
+        int len2 = word2.length();
+        int[] pre = new int[len2+1];
+        int[] cur = new int[len2+1];
+        for(int i = 0; i <= len2; i++){
+            pre[i] = i;
+        }
+        for(int i = 1; i <= len1; i++){
+            cur = new int[len2+1];
+            cur[0] = i;
+            for(int j = 1; j <=len2; j++){
+                if(word1.charAt(i-1) == word2.charAt(j-1)){
+                    cur[j] = pre[j-1];
+                }else{
+                    cur[j] = Math.min(pre[j-1], Math.min(pre[j], cur[j-1]))+1;
+                }
+            }
+            pre = cur;
+            
+        }
+        return cur[len2];
+    }
+}
