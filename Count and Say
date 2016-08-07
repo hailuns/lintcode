@@ -1,0 +1,26 @@
+//just interpret the problem, if given n, output the nth number which depending on the (n-1)th number
+//when check, count = how many continuous number occurs
+
+public String countAndSay(int n) {
+        String first = "1";
+        int count = 1;
+        int index = 1;
+        while(index < n){
+            StringBuilder sb = new StringBuilder();
+            for(int i = 1; i < first.length(); i++){
+                if(first.charAt(i-1) == first.charAt(i)){
+                    count++;
+                }else{
+                    sb.append(count);
+                    sb.append(first.charAt(i-1));
+                    count = 1;
+                }
+            }
+            sb.append(count);
+            sb.append(first.charAt(first.length()-1));
+            first = sb.toString();
+            count = 1;
+            index++;
+        }
+        return first;
+    }
