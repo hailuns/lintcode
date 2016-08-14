@@ -36,4 +36,30 @@ public class Solution {
         }
         return index;
     }
+    
+   
+    
+    //current.next可以指向null，但是不能让一个变量直接等于Null 这样会造成nullpointerexception!
+//这个借鉴了code ganker, 判断left.next是否等于right非常巧妙
+
+
+public ListNode deleteDuplicates(ListNode head) {
+        if(head == null) return head;
+        ListNode dummy = new ListNode(0);
+        ListNode left = dummy;
+        left.next = head;
+        ListNode right = head;
+        while(right != null){
+            while(right.next != null && right.next.val == right.val){
+                right = right.next;
+            }
+            if(left.next == right){
+                left = left.next;
+            }else{
+                left.next = right.next;
+            }
+            right = right.next;
+        }
+        return dummy.next;
+    }
 }
