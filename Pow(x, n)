@@ -1,0 +1,38 @@
+ //还是没理解为什么x^n = x^(n/2)*x^(n/2)*x(n%2), 负数的也没搞懂
+ //这个参考的code ganker的代码 没有做越界处理
+ 
+ 
+ public double myPow(double x, int n) {
+        if(n == 0) return 1.0;
+        double half = myPow(x, n/2);
+        if(n%2 == 0){
+            return half*half;
+        }else if(n>0){
+            return half*half*x;
+        }else{
+            return half*half/x;
+        }
+        
+    }
+    
+  //负数想不明白可以用下面的
+  public double power(double x, int n) {
+        if (n == 0)
+            return 1;
+ 
+        double v = power(x, n / 2);
+ 
+        if (n % 2 == 0) {
+            return v * v;
+        } else {
+            return v * v * x;
+        }
+    }
+ 
+    public double pow(double x, int n) {
+        if (n < 0) {
+            return 1 / power(x, -n);
+        } else {
+            return power(x, n);
+        }
+    }
