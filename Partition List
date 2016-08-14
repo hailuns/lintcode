@@ -1,0 +1,24 @@
+//最开始写成了head.next != null 改成head != null 就过了 这个要注意！
+
+public ListNode partition(ListNode head, int x) {
+        if(head == null) return head;
+        ListNode sDummy = new ListNode(-1);
+        ListNode bDummy = new ListNode(-1);
+        ListNode s = sDummy;
+        ListNode b = bDummy;
+        while(head != null){
+            if(head.val < x){
+                s.next = head;
+                s = s.next;
+            }else{
+                b.next = head;
+                b = b.next;
+            }
+            head = head.next;
+        }
+        //connect small to big
+        
+        s.next = bDummy.next;
+        b.next = null;
+        return sDummy.next;
+    }
