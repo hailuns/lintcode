@@ -1,0 +1,42 @@
+//code ganker 代码
+
+
+public class Solution {
+    public List<String> restoreIpAddresses(String s) {
+        List<String> res = new ArrayList<String>();
+        if(s == null || s.length() == 0) return res;
+        helper(res, s, 0, 1, "");
+        return res;
+    }
+    private void helper(List<String> res, String s, int index, int segment, String item){
+        if(index >= s.length()) return;
+        if(segment == 4){
+            String temp = s.substring(index);
+            if(isValid(temp)){
+                res.add(item+"." + temp);
+            }
+            return;
+        }
+        for(int i = 1; i < 4 && i+index <= s.length(); i++){
+            String part = s.substring(index, index+i);
+            if(isValid(part)){
+                if(segment == 1){
+                    helper(res, s, index+i, segment+1, part);
+                }else{
+                    helper(res, s, index+i, segment+1, item + "." + part);
+                }
+                
+            }
+            
+        }
+    }
+    private boolean isValid(String str){
+        if(str == null || str.length() > 3) return false;
+        if(str.length() > 1 && str.charAt(0) == '0') return false;
+        int strNum = Integer.parseInt(str);
+        if(strNum <= 255 && strNum >= 0){
+            return true;
+        }
+        return false;
+    }
+}
