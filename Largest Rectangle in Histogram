@@ -1,0 +1,23 @@
+//递增stack
+//注意stack存的是index而非value, 注意java要往给定数组加一个数,需要new一个新数组 长度加1 Arrays.copyOf()
+
+
+public class Solution {
+    public int largestRectangleArea(int[] heights) {
+        int i = 0;
+        int maxArea = 0;
+        Stack<Integer> stack = new Stack<Integer>();
+        int[] h = new int[heights.length + 1];
+        h = Arrays.copyOf(heights, heights.length+1);
+        while(i<h.length){
+            if(stack.isEmpty() || h[stack.peek()] <= h[i]){
+                stack.push(i++);
+            }else{
+                int t = stack.pop();
+                maxArea = Math.max(maxArea, h[t]*(stack.isEmpty() ? i : i-stack.peek()-1));
+            }
+        }
+       
+        return maxArea;
+    }
+}
